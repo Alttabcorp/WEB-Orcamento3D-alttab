@@ -1,12 +1,4 @@
-// Inicialização do jsPDF
-const { jsPDF } = window.jspdf;
-
-document.getElementById('orcamentoForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    gerarOrcamento();
-});
-
-function gerarOrcamento() {
+export function gerarOrcamento() {
     // Coletar dados do formulário
     const dados = {
         cliente: {
@@ -79,17 +71,3 @@ function gerarOrcamento() {
     // Salvar o PDF
     doc.save(`orcamento-${dados.cliente.nome.replace(/\s+/g, '_')}.pdf`);
 }
-
-// Formatação do campo de telefone
-document.getElementById('telefoneCliente').addEventListener('input', function(e) {
-    let value = e.target.value.replace(/\D/g, '');
-    if (value.length > 11) value = value.slice(0, 11);
-    
-    if (value.length > 7) {
-        value = value.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3');
-    } else if (value.length > 2) {
-        value = value.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
-    }
-    
-    e.target.value = value;
-});
