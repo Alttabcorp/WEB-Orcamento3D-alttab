@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Orçamentos - Alttab</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Gerador de Orçamentos</h1>
+            <p>Preencha os dados abaixo para gerar seu orçamento</p>
+        </header>
+
+        <form id="orcamentoForm">
+            <!-- Dados do Cliente -->
+            <section class="form-section">
+                <h2>Dados do Cliente</h2>
+                <div class="form-group">
+                    <label for="nomeCliente">Nome do Cliente</label>
+                    <input type="text" id="nomeCliente" name="nomeCliente" required>
+                </div>
+                <div class="form-group">
+                    <label for="emailCliente">E-mail</label>
+                    <input type="email" id="emailCliente" name="emailCliente" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefoneCliente">Telefone</label>
+                    <input type="tel" id="telefoneCliente" name="telefoneCliente" required>
+                </div>
+            </section>
+
+            <!-- Detalhes do Projeto -->
+            <section class="form-section">
+                <h2>Detalhes do Projeto</h2>
+                <div class="form-group">
+                    <label for="tipoProjeto">Tipo de Projeto</label>
+                    <select id="tipoProjeto" name="tipoProjeto" required>
+                        <option value="">Selecione um tipo</option>
+                        <option value="modelagem3d">Modelagem 3D</option>
+                        <option value="animacao">Animação</option>
+                        <option value="renderizacao">Renderização</option>
+                        <option value="completo">Projeto Completo</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="descricaoProjeto">Descrição do Projeto</label>
+                    <textarea id="descricaoProjeto" name="descricaoProjeto" rows="4" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="prazoEntrega">Prazo de Entrega (dias)</label>
+                    <input type="number" id="prazoEntrega" name="prazoEntrega" min="1" required>
+                </div>
+            </section>
+
+            <!-- Serviços Adicionais -->
+            <section class="form-section">
+                <h2>Serviços Adicionais</h2>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="revisoes" name="servicosAdicionais" value="revisoes">
+                        <label for="revisoes">Revisões ilimitadas</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="arquivosFonte" name="servicosAdicionais" value="arquivosFonte">
+                        <label for="arquivosFonte">Arquivos fonte</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="suportePremium" name="servicosAdicionais" value="suportePremium">
+                        <label for="suportePremium">Suporte premium</label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Botões -->
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Gerar Orçamento</button>
+                <button type="reset" class="btn btn-secondary">Limpar Formulário</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="./js/orcamento.js"></script>
+</body>
+</html>
