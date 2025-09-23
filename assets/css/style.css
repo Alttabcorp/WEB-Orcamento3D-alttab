@@ -69,7 +69,7 @@ header::before {
 .header-content {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     flex-wrap: wrap;
     gap: 1.5rem;
     position: relative;
@@ -88,26 +88,25 @@ header::before {
 
 .header-logo {
     flex-shrink: 0;
-    display: flex;
-    align-items: center;
+}
+
+.header-logo img {
+    max-height: 60px;
+    width: auto;
+    object-fit: contain;
 }
 
 .header-text {
     text-align: center;
     flex: 1;
     min-width: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 .header-actions {
     display: flex;
     gap: 0.75rem;
-    align-items: flex-start;
+    align-items: center;
     flex-shrink: 0;
-    margin-top: 0.5rem;
 }
 
 header h1 {
