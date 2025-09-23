@@ -3,19 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alttabcorp - Sistema Interno de Orçamentos 3D</title>
-    <meta name="description" content="Sistema interno da Alttabcorp para funcionários calcularem custos de impressão 3D">
-    <meta name="keywords" content="impressão 3D, orçamento, calculadora, custos, Alttabcorp, sistema interno">
-    <meta name="author" content="Alttabcorp - Sistema Interno">
+    <title>ALTTAB Corp - Sistema de Orçamentos 3D | Impressão 3D Profissional</title>
+    <meta name="description" content="Sistema oficial ALTTAB Corp para cálculo de orçamentos de impressão 3D. Desenvolvendo soluções tecnológicas inovadoras para transformar ideias em resultados concretos.">
+    <meta name="keywords" content="ALTTAB Corp, impressão 3D, orçamento, calculadora, custos, tecnologia, soluções">
+    <meta name="author" content="ALTTAB Corp - Tecnologia e Inovação">
 
     <!-- CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
+    
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous">
 
     <!-- Ícones e Manifest -->
-    <link rel="icon" type="image/png" href="assets/images/icons/favicon.ico">
-    <link rel="icon" type="image/x-icon" href="assets/images/icons/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/icons/icon.jpg">
+    <link rel="icon" type="image/png" href="assets/icons/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="assets/icons/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/icon.jpg">
     
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#1e40af">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="ALTTAB 3D">
+    <meta name="msapplication-TileColor" content="#1e40af">
+    <meta name="msapplication-TileImage" content="assets/icons/icon.jpg">
+
     <!-- Preload para performance -->
     <link rel="preload" href="js/app.js" as="script">
     <link rel="preload" href="js/modules/calculator.js" as="script">
@@ -24,15 +39,23 @@
 <body>
     <!-- Loading Spinner -->
     <div id="loading-spinner" class="loading-overlay">
-        <div class="spinner"></div>
-        <p>Carregando sistema...</p>
+        <div class="loading-content">
+            <img src="assets/images/logo/logo.png" alt="ALTTAB Corp" class="loading-logo">
+            <div class="spinner"></div>
+            <p>Carregando sistema ALTTAB...</p>
+        </div>
     </div>
 
     <div class="container">
         <header>
             <div class="header-content">
-                <h1>🖨️ Sistema de Orçamentos 3D - Alttabcorp</h1>
-                <p>Ferramenta interna para funcionários calcularem custos de impressão 3D</p>
+                <div class="header-brand">
+                    <img src="assets/images/logo/logo.png" alt="ALTTAB Corp Logo" class="header-logo">
+                    <div class="header-text">
+                        <h1>Sistema de Orçamentos 3D</h1>
+                        <p>Transformando Ideias em Soluções Tecnológicas - Impressão 3D Profissional</p>
+                    </div>
+                </div>
                 <div class="header-actions">
                     <button type="button" id="btn-ajuda" class="btn btn-info" title="Ajuda (F1)">
                         ❓ Ajuda
@@ -298,23 +321,58 @@
         </form>
     </div>
 
-    <!-- Rodapé -->
-    <footer class="main-footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>Alttabcorp</h4>
-                <p>Sistema interno de orçamentos 3D</p>
-                <p>Uso exclusivo para funcionários</p>
+    <!-- Footer Oficial ALTTAB -->
+    <footer class="alttab-footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <img src="assets/images/logo/logo.png" alt="ALTTAB Corp Logo" class="footer-logo-img">
+                    </div>
+                    <p class="footer-description">
+                        Desenvolvendo soluções tecnológicas inovadoras para transformar ideias em resultados concretos.
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> alttabcorp@gmail.com</p>
+                        <p><i class="fas fa-phone"></i> (83) 9 9332-2427</p>
+                        <p><i class="fas fa-map-marker-alt"></i> Cajazeiras, PB</p>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Nossos Serviços</h4>
+                    <ul class="footer-links">
+                        <li><a href="https://www.alttabcorp.com.br/pages/construcao/" aria-label="Desenvolvimento Web" target="_blank">Desenvolvimento Web</a></li>
+                        <li><a href="https://www.alttabcorp.com.br/pages/construcao/" aria-label="Impressão 3D" target="_blank">Impressão 3D</a></li>
+                        <li><a href="https://www.alttabcorp.com.br/pages/construcao/" aria-label="Consultoria em TI" target="_blank">Consultoria em TI</a></li>
+                        <li><a href="https://www.alttabcorp.com.br/pages/construcao/" aria-label="Soluções para E-Sports" target="_blank">E-Sports</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Redes Sociais</h4>
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/company/alttab-corp" aria-label="LinkedIn da ALTTAB" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://www.instagram.com/alttabcorp" aria-label="Instagram da ALTTAB" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/alttabcorp" aria-label="Facebook da ALTTAB" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="https://x.com/AlttabeSports" aria-label="Twitter da ALTTAB" target="_blank"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
             </div>
-            <div class="footer-section">
-                <h4>Contato</h4>
-                <p>📧 contato@alttabcorp.com.br</p>
-                <p>🌐 www.alttabcorp.com.br</p>
-            </div>
-            <div class="footer-section">
-                <h4>Versão</h4>
-                <p>v1.0.0 - Setembro 2025</p>
-                <p id="app-version-info">Sistema carregando...</p>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 Alt tab Corp. Todos os direitos reservados.</p>
+                <div class="footer-bottom-links">
+                    <a href="https://www.alttabcorp.com.br/pages/privacidade/" aria-label="Política de Privacidade" target="_blank">Privacidade</a>
+                    <span>|</span>
+                    <a href="https://www.alttabcorp.com.br/pages/termos/" aria-label="Termos de Uso" target="_blank">Termos</a>
+                    <span>|</span>
+                    <a href="https://www.alttabcorp.com.br/pages/cookies/" aria-label="Política de Cookies" target="_blank">Cookies</a>
+                </div>
             </div>
         </div>
     </footer>
@@ -390,6 +448,239 @@
                 imgInfo.textContent = '';
             });
         });
+    </script>
+
+    <!-- PWA Service Worker Registration -->
+    <script>
+        // Registro do Service Worker para PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', async () => {
+                try {
+                    const registration = await navigator.serviceWorker.register('/sw.js', {
+                        scope: '/'
+                    });
+                    
+                    console.log('✅ Service Worker registrado com sucesso:', registration.scope);
+                    
+                    // Detecta atualizações do Service Worker
+                    registration.addEventListener('updatefound', () => {
+                        const newWorker = registration.installing;
+                        
+                        if (newWorker) {
+                            newWorker.addEventListener('statechange', () => {
+                                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                    // Nova versão disponível
+                                    showUpdateNotification();
+                                }
+                            });
+                        }
+                    });
+                    
+                } catch (error) {
+                    console.error('❌ Falha ao registrar Service Worker:', error);
+                }
+            });
+        }
+
+        // Função para mostrar notificação de atualização
+        function showUpdateNotification() {
+            const updateBanner = document.createElement('div');
+            updateBanner.className = 'update-banner';
+            updateBanner.innerHTML = `
+                <div class="update-content">
+                    <span>🚀 Nova versão disponível!</span>
+                    <button onclick="updateApp()" class="update-btn">Atualizar</button>
+                    <button onclick="dismissUpdate()" class="dismiss-btn">×</button>
+                </div>
+            `;
+            
+            // Adiciona estilos inline para o banner
+            updateBanner.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg, #1e40af, #3b82f6);
+                color: white;
+                padding: 1rem;
+                z-index: 10000;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                transform: translateY(-100%);
+                transition: transform 0.3s ease;
+            `;
+            
+            document.body.appendChild(updateBanner);
+            
+            // Anima a entrada
+            setTimeout(() => {
+                updateBanner.style.transform = 'translateY(0)';
+            }, 100);
+        }
+
+        // Função para atualizar a aplicação
+        async function updateApp() {
+            if ('serviceWorker' in navigator) {
+                const registration = await navigator.serviceWorker.getRegistration();
+                if (registration && registration.waiting) {
+                    registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+                    window.location.reload();
+                }
+            }
+        }
+
+        // Função para dispensar a notificação de atualização
+        function dismissUpdate() {
+            const banner = document.querySelector('.update-banner');
+            if (banner) {
+                banner.style.transform = 'translateY(-100%)';
+                setTimeout(() => banner.remove(), 300);
+            }
+        }
+
+        // Detecta quando está sendo executado como PWA
+        window.addEventListener('DOMContentLoaded', () => {
+            const isStandalone = window.navigator.standalone || 
+                                window.matchMedia('(display-mode: standalone)').matches ||
+                                window.matchMedia('(display-mode: fullscreen)').matches;
+            
+            if (isStandalone) {
+                console.log('📱 Executando como PWA');
+                document.body.classList.add('pwa-mode');
+                
+                // Remove elementos específicos quando em modo PWA
+                const helpButton = document.getElementById('btn-ajuda');
+                if (helpButton) {
+                    helpButton.style.display = 'none';
+                }
+            }
+        });
+
+        // Prompt de instalação PWA
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Mostra botão de instalação personalizado
+            showInstallButton();
+        });
+
+        function showInstallButton() {
+            const installButton = document.createElement('button');
+            installButton.className = 'install-pwa-btn btn btn-primary';
+            installButton.innerHTML = '📱 Instalar App';
+            installButton.onclick = installPWA;
+            
+            installButton.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                z-index: 1000;
+                border-radius: 50px;
+                padding: 12px 20px;
+                font-size: 14px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                animation: pulse 2s infinite;
+            `;
+            
+            document.body.appendChild(installButton);
+            
+            // Remove após 10 segundos se não usado
+            setTimeout(() => {
+                if (document.body.contains(installButton)) {
+                    installButton.style.opacity = '0';
+                    setTimeout(() => installButton.remove(), 300);
+                }
+            }, 10000);
+        }
+
+        async function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const result = await deferredPrompt.userChoice;
+                
+                if (result.outcome === 'accepted') {
+                    console.log('✅ PWA instalada com sucesso');
+                } else {
+                    console.log('❌ Instalação PWA cancelada');
+                }
+                
+                deferredPrompt = null;
+                
+                // Remove botão de instalação
+                const installBtn = document.querySelector('.install-pwa-btn');
+                if (installBtn) installBtn.remove();
+            }
+        }
+
+        // Adiciona estilos CSS para PWA
+        const pwaStyles = `
+            .update-content {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                max-width: 1200px;
+                margin: 0 auto;
+                gap: 1rem;
+            }
+            
+            .update-btn {
+                background: rgba(255,255,255,0.2);
+                border: 1px solid rgba(255,255,255,0.3);
+                color: white;
+                padding: 0.5rem 1rem;
+                border-radius: 4px;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
+            
+            .update-btn:hover {
+                background: rgba(255,255,255,0.3);
+            }
+            
+            .dismiss-btn {
+                background: none;
+                border: none;
+                color: white;
+                font-size: 1.5rem;
+                cursor: pointer;
+                padding: 0;
+                width: 30px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
+            }
+            
+            .pwa-mode .header-actions {
+                display: none;
+            }
+            
+            @media (max-width: 768px) {
+                .update-content {
+                    flex-direction: column;
+                    gap: 0.5rem;
+                    text-align: center;
+                }
+                
+                .install-pwa-btn {
+                    bottom: 10px !important;
+                    right: 10px !important;
+                    padding: 10px 16px !important;
+                    font-size: 12px !important;
+                }
+            }
+        `;
+        
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = pwaStyles;
+        document.head.appendChild(styleSheet);
     </script>
 </body>
 </html>

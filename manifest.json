@@ -1,0 +1,82 @@
+{
+  "name": "Sistema de Orçamentos 3D - ALTTAB Corp",
+  "short_name": "ALTTAB 3D",
+  "description": "Sistema oficial ALTTAB Corp para cálculo de orçamentos de impressão 3D. Transformando ideias em soluções tecnológicas.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1e40af",
+  "theme_color": "#1e40af",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "pt-BR",
+  "categories": ["business", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "assets/icons/icon.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icons/icon.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/images/logo/logo.png",
+      "sizes": "256x256",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "assets/images/screenshot-desktop.jpg",
+      "sizes": "1280x720",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "Interface principal do sistema de orçamentos"
+    },
+    {
+      "src": "assets/images/screenshot-mobile.jpg",
+      "sizes": "390x844",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Sistema responsivo em dispositivos móveis"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Nova Calculadora",
+      "short_name": "Calcular",
+      "description": "Abrir calculadora de custos 3D",
+      "url": "/#calculadora",
+      "icons": [
+        {
+          "src": "assets/icons/icon.jpg",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Configurações",
+      "short_name": "Config",
+      "description": "Ajustar configurações do sistema",
+      "url": "/#config",
+      "icons": [
+        {
+          "src": "assets/icons/icon.jpg",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "dir": "ltr",
+  "iarc_rating_id": "",
+  "edge_side_panel": {
+    "preferred_width": 400
+  }
+}
