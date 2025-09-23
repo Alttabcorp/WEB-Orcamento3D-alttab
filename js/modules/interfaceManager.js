@@ -5,7 +5,6 @@
 
 class InterfaceManager {
     constructor() {
-        this.resumoAberto = false;
         this.detalhesExpandidos = false;
         this.inicializar();
     }
@@ -17,7 +16,6 @@ class InterfaceManager {
         this.configurarEventListeners();
         this.configurarValidacaoTempoReal();
         this.configurarContadores();
-        this.configurarResumo();
         this.ocultarLoadingSpinner();
         this.atualizarStatusAplicacao('success', 'Sistema carregado com sucesso!');
     }
@@ -36,18 +34,6 @@ class InterfaceManager {
         const btnExpandir = document.getElementById('btn-expandir-detalhes');
         if (btnExpandir) {
             btnExpandir.addEventListener('click', () => this.toggleDetalhes());
-        }
-
-        // Preview PDF
-        const btnPreview = document.getElementById('btn-preview-pdf');
-        if (btnPreview) {
-            btnPreview.addEventListener('click', () => this.previewPDF());
-        }
-
-        // Resumo sidebar
-        const btnFecharResumo = document.getElementById('btn-fechar-resumo');
-        if (btnFecharResumo) {
-            btnFecharResumo.addEventListener('click', () => this.fecharResumo());
         }
     }
 
@@ -156,35 +142,6 @@ class InterfaceManager {
     }
 
     /**
-     * Configura resumo lateral
-     */
-    configurarResumo() {
-        // Atualizar resumo quando campos mudarem
-        const camposMonitorados = ['nomeCliente', 'tipoProjeto'];
-        
-        camposMonitorados.forEach(id => {
-            const campo = document.getElementById(id);
-            if (campo) {
-                campo.addEventListener('input', () => this.atualizarResumo());
-            }
-        });
-    }
-
-    /**
-     * Atualiza resumo lateral
-     */
-    atualizarResumo() {
-        const nomeCliente = document.getElementById('nomeCliente')?.value || 'Não informado';
-        const tipoProjeto = document.getElementById('tipoProjeto')?.value || 'Não definido';
-
-        const resumoCliente = document.getElementById('resumo-cliente');
-        const resumoProjeto = document.getElementById('resumo-projeto');
-
-        if (resumoCliente) resumoCliente.textContent = nomeCliente;
-        if (resumoProjeto) resumoProjeto.textContent = tipoProjeto;
-    }
-
-    /**
      * Mostra/oculta detalhes dos custos
      */
     toggleDetalhes() {
@@ -201,17 +158,6 @@ class InterfaceManager {
                 btnExpandir.innerHTML = '📋 Ocultar Detalhes';
                 this.detalhesExpandidos = true;
             }
-        }
-    }
-
-    /**
-     * Fecha resumo lateral
-     */
-    fecharResumo() {
-        const resumo = document.getElementById('resumo-orcamento');
-        if (resumo) {
-            resumo.style.display = 'none';
-            this.resumoAberto = false;
         }
     }
 
@@ -234,21 +180,12 @@ class InterfaceManager {
      * Atualiza status da aplicação
      */
     atualizarStatusAplicacao(status, mensagem) {
-        const statusBar = document.getElementById('app-status');
-        const statusText = document.getElementById('status-text');
-        const statusIndicator = document.getElementById('status-indicator');
-
-        if (statusBar && statusText && statusIndicator) {
-            statusText.textContent = mensagem;
-            statusIndicator.className = `status-indicator ${status}`;
-            statusBar.style.display = 'flex';
-
-            // Auto-ocultar após 3 segundos para status de sucesso
-            if (status === 'success') {
-                setTimeout(() => {
-                    statusBar.style.display = 'none';
-                }, 3000);
-            }
+        // Usando o sistema de notificações do UtilsModule
+        if (status === 'success') {
+            // Silencioso para evitar spam de notificações
+            console.log('Status:', mensagem);
+        } else {
+            UtilsModule.mostrarNotificacao(mensagem, status);
         }
     }
 
@@ -266,36 +203,78 @@ class InterfaceManager {
         const ajudaHTML = `
         <div class="ajuda-modal">
             <div class="ajuda-content">
-                <h3>🆘 Como usar o sistema</h3>
+                <button type="button" class="btn-close-modal">&times;</button>
+                <h3>🆘 Guia de Uso - Sistema Alttab 3D</h3>
+                
                 <div class="ajuda-secoes">
                     <div class="ajuda-secao">
-                        <h4>1. 🖨️ Calculadora 3D</h4>
-                        <p>Insira o tempo de impressão e peso da peça. O cálculo é automático!</p>
+                        <h4>1. 🖨️ Calculadora de Impressão 3D</h4>
+                        <p>• <strong>Tempo de Impressão:</strong> Insira o tempo em horas (ex: 4.5 para 4h30min)</p>
+                        <p>• <strong>Peso da Peça:</strong> Peso do filamento necessário em gramas</p>
+                        <p>• <strong>Cálculo Automático:</strong> Os valores são calculados automaticamente conforme você digita</p>
+                        <p>• <strong>Detalhes:</strong> Clique em "Ver Detalhes" para visualizar o breakdown completo dos custos</p>
                     </div>
+                    
                     <div class="ajuda-secao">
                         <h4>2. 👤 Dados do Cliente</h4>
-                        <p>Preencha as informações do cliente para personalizar o orçamento (opcionais).</p>
+                        <p>• <strong>Campos Opcionais:</strong> Todos os campos podem ser preenchidos posteriormente</p>
+                        <p>• <strong>Formatação Automática:</strong> O telefone é formatado automaticamente</p>
+                        <p>• <strong>Validação:</strong> Email é validado automaticamente</p>
                     </div>
+                    
                     <div class="ajuda-secao">
-                        <h4>3. 📋 Projeto</h4>
-                        <p>Descreva detalhadamente o que será desenvolvido e adicione imagem se necessário.</p>
+                        <h4>3. 📋 Detalhes do Projeto</h4>
+                        <p>• <strong>Descrição:</strong> Descreva o projeto detalhadamente</p>
+                        <p>• <strong>Imagem:</strong> Adicione uma imagem do projeto (opcional)</p>
+                        <p>• <strong>Prazo:</strong> Defina o prazo de entrega em dias úteis</p>
                     </div>
+                    
                     <div class="ajuda-secao">
-                        <h4>4. ⚙️ Configurações</h4>
-                        <p>Configure custos, margens e parâmetros através do menu de configurações.</p>
+                        <h4>4. ⚙️ Configurações Avançadas</h4>
+                        <p>• <strong>Custos:</strong> Configure preços de filamento, energia, impostos, etc.</p>
+                        <p>• <strong>Máquina:</strong> Ajuste potência, valor e vida útil da impressora</p>
+                        <p>• <strong>Import/Export:</strong> Salve e carregue configurações</p>
                     </div>
                 </div>
                 
                 <div class="ajuda-atalhos">
                     <h4>⌨️ Atalhos de Teclado</h4>
-                    <p><strong>F1:</strong> Mostrar esta ajuda</p>
-                    <p><strong>Ctrl + Enter:</strong> Gerar PDF</p>
-                    <p><strong>Ctrl + S:</strong> Abrir configurações</p>
+                    <div class="atalhos-grid">
+                        <div class="atalho-item">
+                            <kbd>F1</kbd>
+                            <span>Abrir esta ajuda</span>
+                        </div>
+                        <div class="atalho-item">
+                            <kbd>Ctrl + Enter</kbd>
+                            <span>Gerar PDF do orçamento</span>
+                        </div>
+                        <div class="atalho-item">
+                            <kbd>Ctrl + S</kbd>
+                            <span>Abrir configurações</span>
+                        </div>
+                        <div class="atalho-item">
+                            <kbd>Esc</kbd>
+                            <span>Fechar modal de ajuda</span>
+                        </div>
+                    </div>
                 </div>
                 
-                <div style="text-align: center; margin-top: 2rem;">
-                    <button type="button" onclick="this.closest('.ajuda-modal').remove()" class="btn btn-primary">
+                <div class="ajuda-dicas">
+                    <h4>💡 Dicas Importantes</h4>
+                    <ul>
+                        <li>O sistema salva automaticamente suas configurações no navegador</li>
+                        <li>Você pode trabalhar offline após o primeiro carregamento</li>
+                        <li>O cálculo inclui automaticamente impostos, taxas de cartão e custos de anúncio</li>
+                        <li>Use a função "Copiar Resultado" para compartilhar cálculos rapidamente</li>
+                    </ul>
+                </div>
+                
+                <div class="ajuda-actions">
+                    <button type="button" class="btn btn-primary btn-fechar-ajuda">
                         ✅ Entendi
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-config-ajuda">
+                        ⚙️ Ir para Configurações
                     </button>
                 </div>
             </div>
@@ -321,7 +300,30 @@ class InterfaceManager {
                 }
             };
             document.addEventListener('keydown', handler);
-
+            
+            // Botão X do canto
+            const btnX = novoModal.querySelector('.btn-close-modal');
+            btnX?.addEventListener('click', () => {
+                novoModal.remove();
+                document.removeEventListener('keydown', handler);
+            });
+            
+            // Botão fechar
+            const btnFechar = novoModal.querySelector('.btn-fechar-ajuda');
+            btnFechar?.addEventListener('click', () => {
+                novoModal.remove();
+                document.removeEventListener('keydown', handler);
+            });
+            
+            // Botão configurações
+            const btnConfig = novoModal.querySelector('.btn-config-ajuda');
+            btnConfig?.addEventListener('click', () => {
+                novoModal.remove();
+                document.removeEventListener('keydown', handler);
+                // Abrir configurações
+                document.getElementById('btn-configuracoes')?.click();
+            });
+            
             // Fechar clicando fora do conteúdo
             novoModal.addEventListener('click', (e) => {
                 if (e.target === novoModal) {

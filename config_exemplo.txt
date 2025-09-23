@@ -17,6 +17,11 @@ percentual_falha=0.10
 # Markup de Venda
 markup=3
 
+# Custos Adicionais
+percentual_imposto=0.085
+taxa_cartao=0.045
+custo_anuncio_percentual=0.15
+
 # Configurações da Máquina
 potencia_w=175
 valor_maquina=2000.00

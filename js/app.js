@@ -74,7 +74,7 @@ class AppManager {
         ];
 
         const faltando = dependencias.filter(dep => !dep.objeto);
-        
+
         if (faltando.length > 0) {
             throw new Error(`Dependências não encontradas: ${faltando.map(d => d.nome).join(', ')}`);
         }
@@ -121,82 +121,6 @@ class AppManager {
     adicionarFuncionalidadesExtras() {
         // Adicionar botão de copiar resultado
         this.calculadoraInterface.adicionarBotaoCopiar();
-
-        // Adicionar validação em tempo real nos campos obrigatórios
-        this.adicionarValidacaoTempoReal();
-
-        // Adicionar dicas de ajuda
-        this.adicionarDicasAjuda();
-    }
-
-    /**
-     * Adiciona validação em tempo real nos campos
-     */
-    adicionarValidacaoTempoReal() {
-        const campos = [
-            { id: 'nomeCliente', validacao: 'obrigatorio' },
-            { id: 'emailCliente', validacao: 'email' },
-            { id: 'telefoneCliente', validacao: 'obrigatorio' },
-            { id: 'descricaoProjeto', validacao: 'obrigatorio' }
-        ];
-
-        campos.forEach(campo => {
-            const elemento = document.getElementById(campo.id);
-            if (elemento) {
-                elemento.addEventListener('blur', () => {
-                    this.validarCampo(elemento, campo.validacao);
-                });
-            }
-        });
-    }
-
-    /**
-     * Valida um campo específico
-     * @param {HTMLElement} elemento - Elemento a ser validado
-     * @param {string} tipoValidacao - Tipo de validação
-     */
-    validarCampo(elemento, tipoValidacao) {
-        const valor = elemento.value.trim();
-        let erro = null;
-
-        switch (tipoValidacao) {
-            case 'obrigatorio':
-                erro = UtilsModule.validarCampoObrigatorio(valor, elemento.labels[0]?.textContent || 'Campo');
-                break;
-            case 'email':
-                if (valor && !UtilsModule.validarEmail(valor)) {
-                    erro = 'Formato de email inválido';
-                }
-                break;
-        }
-
-        // Aplicar estilo visual
-        if (erro) {
-            elemento.style.borderColor = '#dc3545';
-            elemento.title = erro;
-        } else {
-            elemento.style.borderColor = '#28a745';
-            elemento.title = '';
-        }
-    }
-
-    /**
-     * Adiciona dicas de ajuda aos campos
-     */
-    adicionarDicasAjuda() {
-        const dicas = {
-            'tempo-impressao': 'Tempo total estimado para imprimir a peça em horas (ex: 4.5)',
-            'peso-peca': 'Peso do filamento necessário em gramas (ex: 25.5)',
-            'prazoEntrega': 'Quantos dias úteis você precisa para entregar o projeto'
-        };
-
-        Object.entries(dicas).forEach(([id, dica]) => {
-            const elemento = document.getElementById(id);
-            if (elemento) {
-                elemento.title = dica;
-                elemento.setAttribute('data-dica', dica);
-            }
-        });
     }
 
     /**
@@ -224,7 +148,9 @@ class AppManager {
         // F1 para ajuda
         if (e.key === 'F1') {
             e.preventDefault();
-            this.mostrarAjuda();
+            if (this.interfaceManager) {
+                this.interfaceManager.mostrarAjuda();
+            }
         }
     }
 
@@ -236,31 +162,6 @@ class AppManager {
         if (this.calculadora) {
             console.log('Página visível - verificando configurações...');
         }
-    }
-
-    /**
-     * Mostra modal de ajuda
-     */
-    mostrarAjuda() {
-        const ajuda = `
-ATALHOS DO SISTEMA:
-• Ctrl/Cmd + S: Abrir configurações
-• Ctrl/Cmd + Enter: Gerar orçamento PDF
-• F1: Esta ajuda
-
-COMO USAR:
-1. Preencha os dados do cliente
-2. Insira tempo e peso da impressão 3D
-3. O cálculo é feito automaticamente
-4. Gere o PDF com o orçamento completo
-
-CONFIGURAÇÕES:
-• Clique no botão "⚙️ Configurações" para ajustar custos
-• Você pode importar/exportar suas configurações
-• Todas as configurações são salvas no navegador
-        `;
-
-        UtilsModule.mostrarNotificacao(ajuda, 'info');
     }
 
     /**
@@ -282,7 +183,7 @@ CONFIGURAÇÕES:
     reiniciar() {
         console.log('Reiniciando aplicação...');
         this.inicializada = false;
-        
+
         // Limpar event listeners se necessário
         // Recriar instâncias
         this.inicializar();
