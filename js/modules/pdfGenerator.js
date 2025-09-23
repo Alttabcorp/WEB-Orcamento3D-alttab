@@ -574,7 +574,7 @@ class PDFGenerator {
         this.doc.setFont("helvetica", "bold");
         this.doc.text("Contato:", col1X, rodapeY + 15);
         this.doc.setFont("helvetica", "normal");
-        this.doc.text("alttab@gmail.com", col1X, rodapeY + 20);
+        this.doc.text("alttabcorp@gmail.com", col1X, rodapeY + 20);
         this.doc.text("WhatsApp: (83) 99332-2427", col1X, rodapeY + 25);
         
         // Coluna 2 - Localização e Web
