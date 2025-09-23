@@ -237,7 +237,7 @@ class PDFGenerator {
                 telefone: document.getElementById('telefoneCliente').value
             },
             projeto: {
-                tipo: document.getElementById('tipoProjeto').value,
+                tipo: 'Impressão 3D', // Tipo padrão, já que não existe campo específico
                 descricao: document.getElementById('descricaoProjeto').value,
                 prazo: document.getElementById('prazoEntrega').value
             },
@@ -277,7 +277,6 @@ class PDFGenerator {
         if (!dados.cliente.nome) erros.push('Nome do cliente é obrigatório');
         if (!dados.cliente.email) erros.push('Email do cliente é obrigatório');
         if (!dados.cliente.telefone) erros.push('Telefone do cliente é obrigatório');
-        if (!dados.projeto.tipo) erros.push('Tipo de projeto é obrigatório');
         if (!dados.projeto.descricao) erros.push('Descrição do projeto é obrigatória');
         if (!dados.projeto.prazo) erros.push('Prazo de entrega é obrigatório');
 

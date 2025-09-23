@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste PDF</title>
+</head>
+<body>
+    <h1>Teste de Geração de PDF</h1>
+    
+    <form id="testForm">
+        <input type="text" id="nomeCliente" value="João Silva" placeholder="Nome">
+        <input type="email" id="emailCliente" value="joao@email.com" placeholder="Email">
+        <input type="tel" id="telefoneCliente" value="(11) 99999-9999" placeholder="Telefone">
+        <textarea id="descricaoProjeto" placeholder="Descrição">Peça para impressão 3D</textarea>
+        <input type="number" id="prazoEntrega" value="7" placeholder="Prazo">
+        <input type="number" id="tempo-impressao" value="5" placeholder="Tempo">
+        <input type="number" id="peso-peca" value="100" placeholder="Peso">
+        
+        <button type="submit">Gerar PDF Teste</button>
+    </form>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        window.jsPDF = window.jspdf.jsPDF;
+    </script>
+    <script src="js/utils/formatting.js"></script>
+    <script src="js/modules/calculator.js"></script>
+    <script src="js/modules/config.js"></script>
+    <script src="js/modules/pdfGenerator.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM carregado');
+            console.log('jsPDF disponível:', !!window.jsPDF);
+            console.log('PDFGenerator disponível:', !!window.PDFGenerator);
+            console.log('UtilsModule disponível:', !!window.UtilsModule);
+            
+            const form = document.getElementById('testForm');
+            const pdfGen = new PDFGenerator();
+            
+            form.addEventListener('submit', function(e) {
+                console.log('Formulário submetido');
+                try {
+                    pdfGen.gerarOrcamento(e);
+                } catch (error) {
+                    console.error('Erro capturado:', error);
+                    alert('Erro: ' + error.message);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
