@@ -1,0 +1,29 @@
+# Configurações Alttab 3D
+# Arquivo de exemplo para importação
+# Modifique os valores conforme necessário
+
+# Custos de Material e Energia
+preco_filamento_por_kg=156.00
+valor_kw_h=0.84
+
+# Acessórios e Embalagens
+quantidade_acessorios=1
+custo_unidade_acessorio=0.48
+
+# Custos Operacionais
+custo_fixo_mensal=300.00
+percentual_falha=0.10
+
+# Markup de Venda
+markup=3
+
+# Configurações da Máquina
+potencia_w=175
+valor_maquina=2000.00
+vida_util_horas=24000
+
+# Exemplo de uso:
+# 1. Baixe este arquivo
+# 2. Modifique os valores conforme sua necessidade
+# 3. Na aplicação, vá em Configurações > Importar/Exportar
+# 4. Selecione este arquivo para importar

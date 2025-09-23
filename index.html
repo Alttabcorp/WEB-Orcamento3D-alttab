@@ -3,100 +3,434 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gerador de Orçamentos - Alttab</title>
+    <title>Alttabcorp - Sistema Interno de Orçamentos 3D</title>
+    <meta name="description" content="Sistema interno da Alttabcorp para funcionários calcularem custos de impressão 3D">
+    <meta name="keywords" content="impressão 3D, orçamento, calculadora, custos, Alttabcorp, sistema interno">
+    <meta name="author" content="Alttabcorp - Sistema Interno">
 
     <!-- CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
 
-    <!-- Ícones -->
+    <!-- Ícones e Manifest -->
     <link rel="icon" type="image/png" href="assets/images/icons/favicon.ico">
     <link rel="icon" type="image/x-icon" href="assets/images/icons/favicon.ico">
-    <link rel="icon" type="image/svg+xml" href="assets/images/icons/icon.jpg">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/icons/icon.jpg">
-
-    <!-- Logo (exemplo de uso, não deve ficar no <head>) -->
-    <!-- <img src="assets/images/logo/logo.png" alt="Logo"> -->
+    
+    <!-- Preload para performance -->
+    <link rel="preload" href="js/app.js" as="script">
+    <link rel="preload" href="js/modules/calculator.js" as="script">
 
 </head>
 <body>
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Carregando sistema...</p>
+    </div>
+
     <div class="container">
         <header>
-            <h1>Gerador de Orçamentos</h1>
-            <p>Preencha os dados abaixo para gerar seu orçamento</p>
+            <div class="header-content">
+                <h1>🖨️ Sistema de Orçamentos 3D - Alttabcorp</h1>
+                <p>Ferramenta interna para funcionários calcularem custos de impressão 3D</p>
+                <div class="header-actions">
+                    <button type="button" id="btn-ajuda" class="btn btn-info" title="Ajuda (F1)">
+                        ❓ Ajuda
+                    </button>
+                </div>
+            </div>
         </header>
 
-        <form id="orcamentoForm">
+        <!-- Status da Aplicação -->
+        <div id="app-status" class="status-bar" style="display: none;">
+            <span id="status-text">Sistema inicializando...</span>
+            <div class="status-indicator" id="status-indicator"></div>
+        </div>
+
+        <form id="orcamentoForm" class="main-form">
+            <!-- Calculadora de Impressão 3D - Seção Principal -->
+            <section class="form-section calculadora-section priority-section">
+                <div class="section-header">
+                    <h2>🖨️ Calculadora de Impressão 3D</h2>
+                    <p class="section-description">
+                        Insira o tempo e peso para calcular automaticamente os custos de impressão
+                    </p>
+                </div>
+                
+                <div class="calculadora-inputs">
+                    <div class="form-group">
+                        <label for="tempo-impressao">
+                            ⏱️ Tempo de Impressão (horas)
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="number" 
+                            id="tempo-impressao" 
+                            name="tempo-impressao"
+                            step="0.01" 
+                            min="0.01" 
+                            placeholder="Ex: 4.56"
+                            title="Tempo total estimado para imprimir a peça em horas"
+                            required
+                            autocomplete="off">
+                        <small class="field-hint">Tempo total estimado de impressão</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="peso-peca">
+                            ⚖️ Peso da Peça (gramas)
+                            <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="number" 
+                            id="peso-peca" 
+                            name="peso-peca"
+                            step="0.01" 
+                            min="0" 
+                            placeholder="Ex: 14.00"
+                            title="Peso do filamento necessário em gramas"
+                            required
+                            autocomplete="off">
+                        <small class="field-hint">Peso do filamento usado na impressão</small>
+                    </div>
+                </div>
+
+                <div class="calculadora-actions">
+                    <button type="button" id="calcular-custo" class="btn btn-primary">
+                        🧮 Calcular Custo
+                    </button>
+                    <button type="button" id="limpar-calculo" class="btn btn-secondary">
+                        🗑️ Limpar
+                    </button>
+                </div>
+
+                <!-- Resultado do Cálculo -->
+                <div id="resultado-calculo" class="resultado-section" style="display: none;">
+                    <div class="resultado-header">
+                        <h3>📊 Resultado do Cálculo</h3>
+                        <button type="button" id="btn-expandir-detalhes" class="btn btn-link">
+                            📋 Ver Detalhes
+                        </button>
+                    </div>
+                    
+                    <div class="resultado-destaque">
+                        <div class="custo-principal">
+                            <span class="label">Custo Total por Unidade</span>
+                            <span class="valor" id="custo-total-display">R$ 0,00</span>
+                        </div>
+                    </div>
+
+                    <!-- Detalhes Expandidos -->
+                    <div id="detalhes-custos" class="detalhes-section" style="display: none;">
+                        <h4>💰 Detalhamento de Custos</h4>
+                        <div class="resultado-grid">
+                            <div class="resultado-item">
+                                <strong>🧵 Custo do Filamento</strong>
+                                <div class="resultado-valor" id="custo-filamento-display">R$ 0,00</div>
+                            </div>
+                            <div class="resultado-item">
+                                <strong>⚡ Custo Energético</strong>
+                                <div class="resultado-valor" id="custo-energetico-display">R$ 0,00</div>
+                            </div>
+                            <div class="resultado-item">
+                                <strong>📦 Acessórios/Embalagem</strong>
+                                <div class="resultado-valor" id="custo-acessorios-display">R$ 0,00</div>
+                            </div>
+                            <div class="resultado-item">
+                                <strong>🏢 Custo Fixo por Unidade</strong>
+                                <div class="resultado-valor" id="custo-fixo-display">R$ 0,00</div>
+                            </div>
+                            <div class="resultado-item">
+                                <strong>🔧 Amortização</strong>
+                                <div class="resultado-valor" id="amortizacao-display">R$ 0,00</div>
+                            </div>
+                            <div class="resultado-item">
+                                <strong>❌ Custo de Falha</strong>
+                                <div class="resultado-valor" id="custo-falha-display">R$ 0,00</div>
+                            </div>
+                            <div class="resultado-item">
+                                <strong>📊 Imposto</strong>
+                                <div class="resultado-valor" id="custo-imposto-display">R$ 0,00</div>
+                            </div>
+                            <div class="resultado-item">
+                                <strong>💳 Taxa do Cartão</strong>
+                                <div class="resultado-valor" id="custo-taxa-cartao-display">R$ 0,00</div>
+                            </div>
+                            <div class="resultado-item">
+                                <strong>📢 Custo de Anúncio</strong>
+                                <div class="resultado-valor" id="custo-anuncio-display">R$ 0,00</div>
+                            </div>
+                        </div>
+
+                        <h4>💲 Preços de Venda Sugeridos</h4>
+                        <div class="precos-venda">
+                            <div class="preco-item preco-consumidor">
+                                <span class="preco-label">🛒 Preço Consumidor Final</span>
+                                <span class="preco-valor" id="preco-consumidor-display">R$ 0,00</span>
+                                <span class="lucro-info">Lucro: <span id="lucro-consumidor-display">R$ 0,00</span></span>
+                            </div>
+                            <div class="preco-item preco-lojista">
+                                <span class="preco-label">🏪 Preço Lojista</span>
+                                <span class="preco-valor" id="preco-lojista-display">R$ 0,00</span>
+                                <span class="lucro-info">Lucro: <span id="lucro-lojista-display">R$ 0,00</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
             <!-- Dados do Cliente -->
-            <section class="form-section">
-                <h2>Dados do Cliente</h2>
-                <div class="form-group">
-                    <label for="nomeCliente">Nome do Cliente</label>
-                    <input type="text" id="nomeCliente" name="nomeCliente" required>
+            <section class="form-section client-section">
+                <div class="section-header">
+                    <h2>👤 Dados do Cliente</h2>
+                    <p class="section-description">Informações opcionais do cliente (podem ser preenchidas posteriormente)</p>
                 </div>
-                <div class="form-group">
-                    <label for="emailCliente">E-mail</label>
-                    <input type="email" id="emailCliente" name="emailCliente" required>
-                </div>
-                <div class="form-group">
-                    <label for="telefoneCliente">Telefone</label>
-                    <input type="tel" id="telefoneCliente" name="telefoneCliente" required>
+                
+                <div class="client-grid">
+                    <div class="form-group">
+                        <label for="nomeCliente">
+                            Nome Completo
+                        </label>
+                        <input 
+                            type="text" 
+                            id="nomeCliente" 
+                            name="nomeCliente" 
+                            placeholder="Ex: João Silva"
+                            autocomplete="name">
+                        <div class="validation-feedback" id="nome-feedback"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="emailCliente">
+                            E-mail
+                        </label>
+                        <input 
+                            type="email" 
+                            id="emailCliente" 
+                            name="emailCliente" 
+                            placeholder="joao@exemplo.com"
+                            autocomplete="email">
+                        <div class="validation-feedback" id="email-feedback"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="telefoneCliente">
+                            Telefone
+                        </label>
+                        <input 
+                            type="tel" 
+                            id="telefoneCliente" 
+                            name="telefoneCliente" 
+                            placeholder="(11) 99999-9999"
+                            autocomplete="tel">
+                        <div class="validation-feedback" id="telefone-feedback"></div>
+                    </div>
                 </div>
             </section>
 
             <!-- Detalhes do Projeto -->
-            <section class="form-section">
-                <h2>Detalhes do Projeto</h2>
-                <div class="form-group">
-                    <label for="tipoProjeto">Tipo de Projeto</label>
-                    <select id="tipoProjeto" name="tipoProjeto" required>
-                        <option value="">Selecione um tipo</option>
-                        <option value="modelagem3d">Modelagem 3D</option>
-                        <option value="animacao">Animação</option>
-                        <option value="renderizacao">Renderização</option>
-                        <option value="completo">Projeto Completo</option>
-                    </select>
+            <section class="form-section project-section">
+                <div class="section-header">
+                    <h2>📋 Detalhes do Projeto</h2>
+                    <p class="section-description">Especificações e características do projeto</p>
                 </div>
-                <div class="form-group">
-                    <label for="descricaoProjeto">Descrição do Projeto</label>
-                    <textarea id="descricaoProjeto" name="descricaoProjeto" rows="4" required></textarea>
+                
+                <div class="project-grid">
+                    <div class="form-group">
+                        <label for="imagemProjeto">
+                            📷 Imagem do Projeto (opcional)
+                        </label>
+                        <input 
+                            type="file" 
+                            id="imagemProjeto" 
+                            name="imagemProjeto" 
+                            accept="image/*"
+                            title="Selecione uma imagem para incluir no relatório">
+                        <small class="field-hint">Imagem será redimensionada automaticamente para o PDF</small>
+                        
+                        <!-- Preview da imagem -->
+                        <div id="preview-imagem" style="display: none; margin-top: 1rem;">
+                            <div style="border: 2px dashed #007bff; border-radius: 8px; padding: 1rem; text-align: center;">
+                                <img id="img-preview" src="" alt="Preview" style="max-width: 200px; max-height: 150px; border-radius: 4px;">
+                                <div style="margin-top: 0.5rem;">
+                                    <span id="img-info" style="font-size: 0.8rem; color: #6c757d;"></span>
+                                    <button type="button" id="btn-remover-imagem" style="margin-left: 1rem; padding: 0.25rem 0.5rem; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                        ❌ Remover
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="prazoEntrega">
+                            Prazo de Entrega (dias)
+                        </label>
+                        <input 
+                            type="number" 
+                            id="prazoEntrega" 
+                            name="prazoEntrega" 
+                            min="1" 
+                            max="365"
+                            placeholder="Ex: 7"
+                            title="Quantos dias úteis você precisa para entregar o projeto">
+                    </div>
                 </div>
+                
                 <div class="form-group">
-                    <label for="prazoEntrega">Prazo de Entrega (dias)</label>
-                    <input type="number" id="prazoEntrega" name="prazoEntrega" min="1" required>
+                    <label for="descricaoProjeto">
+                        Descrição Detalhada do Projeto
+                    </label>
+                    <textarea 
+                        id="descricaoProjeto" 
+                        name="descricaoProjeto" 
+                        rows="4" 
+                        placeholder="Descreva detalhadamente o que precisa ser desenvolvido, incluindo especificações técnicas, materiais, acabamentos, etc."></textarea>
+                    <small class="field-hint">
+                        <span id="desc-counter">0</span>/500 caracteres
+                    </small>
                 </div>
             </section>
 
-            <!-- Serviços Adicionais -->
-            <section class="form-section">
-                <h2>Serviços Adicionais</h2>
-                <div class="checkbox-group">
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="revisoes" name="servicosAdicionais" value="revisoes">
-                        <label for="revisoes">Revisões ilimitadas</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="arquivosFonte" name="servicosAdicionais" value="arquivosFonte">
-                        <label for="arquivosFonte">Arquivos fonte</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="suportePremium" name="servicosAdicionais" value="suportePremium">
-                        <label for="suportePremium">Suporte premium</label>
-                    </div>
-                </div>
-            </section>
 
-            <!-- Botões -->
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary">Gerar Orçamento</button>
-                <button type="reset" class="btn btn-secondary">Limpar Formulário</button>
+
+            <!-- Ações Principais -->
+            <div class="form-actions main-actions">
+                <button type="submit" class="btn btn-primary btn-large">
+                    📄 Gerar Orçamento PDF
+                </button>
+                <button type="reset" class="btn btn-secondary">
+                    🔄 Limpar Formulário
+                </button>
             </div>
         </form>
+
+        <!-- Resumo Lateral (Mobile: oculto por padrão) -->
+        <aside id="resumo-orcamento" class="resumo-sidebar" style="display: none;">
+            <div class="resumo-header">
+                <h3>📋 Resumo do Orçamento</h3>
+                <button type="button" id="btn-fechar-resumo" class="btn-close">&times;</button>
+            </div>
+            <div class="resumo-content">
+                <div class="resumo-item">
+                    <span class="resumo-label">Cliente:</span>
+                    <span class="resumo-valor" id="resumo-cliente">-</span>
+                </div>
+                <div class="resumo-item">
+                    <span class="resumo-label">Projeto:</span>
+                    <span class="resumo-valor" id="resumo-projeto">-</span>
+                </div>
+                <div class="resumo-item">
+                    <span class="resumo-label">Custo Total:</span>
+                    <span class="resumo-valor destaque" id="resumo-custo">R$ 0,00</span>
+                </div>
+                <div class="resumo-item">
+                    <span class="resumo-label">Preço Final:</span>
+                    <span class="resumo-valor destaque" id="resumo-preco">R$ 0,00</span>
+                </div>
+            </div>
+            <div class="resumo-actions">
+                <button type="button" id="btn-preview-pdf" class="btn btn-outline btn-small">
+                    👁️ Preview
+                </button>
+            </div>
+        </aside>
     </div>
+
+    <!-- Rodapé -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Alttabcorp</h4>
+                <p>Sistema interno de orçamentos 3D</p>
+                <p>Uso exclusivo para funcionários</p>
+            </div>
+            <div class="footer-section">
+                <h4>Contato</h4>
+                <p>📧 contato@alttabcorp.com.br</p>
+                <p>🌐 www.alttabcorp.com.br</p>
+            </div>
+            <div class="footer-section">
+                <h4>Versão</h4>
+                <p>v1.0.0 - Setembro 2025</p>
+                <p id="app-version-info">Sistema carregando...</p>
+            </div>
+        </div>
+    </footer>
     <!-- jsPDF UMD -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
         window.jsPDF = window.jspdf.jsPDF;
     </script>
+    
+    <!-- Módulos da aplicação -->
+    <script src="js/utils/formatting.js"></script>
+    <script src="js/modules/calculator.js"></script>
+    <script src="js/modules/config.js"></script>
+    <script src="js/modules/pdfGenerator.js"></script>
+    <script src="js/modules/calculadoraInterface.js"></script>
+    <script src="js/modules/interfaceManager.js"></script>
+    <script src="js/app.js"></script>
+    
+    <!-- Arquivo legado para compatibilidade -->
     <script src="assets/js/orcamento.js"></script>
+
+    <!-- Script para preview de imagem -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputImagem = document.getElementById('imagemProjeto');
+            const previewContainer = document.getElementById('preview-imagem');
+            const imgPreview = document.getElementById('img-preview');
+            const imgInfo = document.getElementById('img-info');
+            const btnRemover = document.getElementById('btn-remover-imagem');
+
+            // Handler para mudança no input de arquivo
+            inputImagem.addEventListener('change', function(e) {
+                const arquivo = e.target.files[0];
+                
+                if (arquivo) {
+                    // Validar tipo de arquivo
+                    if (!arquivo.type.startsWith('image/')) {
+                        alert('Por favor, selecione apenas arquivos de imagem.');
+                        this.value = '';
+                        return;
+                    }
+                    
+                    // Validar tamanho (máximo 5MB)
+                    if (arquivo.size > 5 * 1024 * 1024) {
+                        alert('A imagem deve ter no máximo 5MB.');
+                        this.value = '';
+                        return;
+                    }
+                    
+                    // Criar URL da imagem e mostrar preview
+                    const url = URL.createObjectURL(arquivo);
+                    imgPreview.src = url;
+                    
+                    // Mostrar informações do arquivo
+                    const tamanhoMB = (arquivo.size / (1024 * 1024)).toFixed(2);
+                    imgInfo.textContent = `${arquivo.name} (${tamanhoMB} MB)`;
+                    
+                    // Mostrar container de preview
+                    previewContainer.style.display = 'block';
+                } else {
+                    // Esconder preview se nenhum arquivo selecionado
+                    previewContainer.style.display = 'none';
+                }
+            });
+
+            // Handler para remover imagem
+            btnRemover.addEventListener('click', function() {
+                inputImagem.value = '';
+                previewContainer.style.display = 'none';
+                
+                // Limpar URL objeto para evitar vazamentos de memória
+                if (imgPreview.src.startsWith('blob:')) {
+                    URL.revokeObjectURL(imgPreview.src);
+                }
+                imgPreview.src = '';
+                imgInfo.textContent = '';
+            });
+        });
+    </script>
 </body>
 </html>
