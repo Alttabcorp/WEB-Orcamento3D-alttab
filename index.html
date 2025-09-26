@@ -382,13 +382,120 @@
         window.jsPDF = window.jspdf.jsPDF;
     </script>
     
-    <!-- Módulos da aplicação -->
+    <!-- Utilitários (estrutura modular) -->
+    <script src="js/modules/utils/setup.js"></script>
+    <script src="js/modules/utils/core/formatarTelefone.js"></script>
+    <script src="js/modules/utils/core/validarCampoObrigatorio.js"></script>
+    <script src="js/modules/utils/core/validarEmail.js"></script>
+    <script src="js/modules/utils/core/formatarMoeda.js"></script>
+    <script src="js/modules/utils/core/formatarData.js"></script>
+    <script src="js/modules/utils/core/sanitizarNomeArquivo.js"></script>
+    <script src="js/modules/utils/core/debounce.js"></script>
+    <script src="js/modules/utils/core/copiarParaClipboard.js"></script>
+    <script src="js/modules/utils/core/mostrarNotificacao.js"></script>
     <script src="js/utils/formatting.js"></script>
-    <script src="js/modules/calculator.js"></script>
+
+    <!-- Núcleo da calculadora (estrutura modular) -->
+    <script src="js/modules/calculator/setup.js"></script>
+    <script src="js/modules/calculator/core/getDefaultConfig.js"></script>
+    <script src="js/modules/calculator/core/carregarConfiguracoes.js"></script>
+    <script src="js/modules/calculator/core/salvarConfiguracoes.js"></script>
+    <script src="js/modules/calculator/core/importarConfiguracoes.js"></script>
+    <script src="js/modules/calculator/core/exportarConfiguracoes.js"></script>
+    <script src="js/modules/calculator/core/validarInputs.js"></script>
+    <script src="js/modules/calculator/core/formatarMoeda.js"></script>
+    <script src="js/modules/calculator/core/calcularCusto.js"></script>
+    <script src="js/modules/calculator/core/atualizarConfiguracao.js"></script>
+    <script src="js/modules/calculator/core/obterConfiguracoes.js"></script>
+    <script src="js/modules/calculator/core/resetarConfiguracoes.js"></script>
+    <script src="js/modules/calculator/core/inicializar.js"></script>
+    <script src="js/modules/calculator/calculator.js"></script>
+
+    <!-- Configurações (estrutura modular) -->
+    <script src="js/modules/config/setup.js"></script>
+    <script src="js/modules/config/core/criarInterfaceConfiguracoes.js"></script>
+    <script src="js/modules/config/core/criarBotaoConfiguracoes.js"></script>
+    <script src="js/modules/config/core/abrirModal.js"></script>
+    <script src="js/modules/config/core/fecharModal.js"></script>
+    <script src="js/modules/config/core/trocarTab.js"></script>
+    <script src="js/modules/config/core/carregarValores.js"></script>
+    <script src="js/modules/config/core/salvarConfiguracoes.js"></script>
+    <script src="js/modules/config/core/lerArquivo.js"></script>
+    <script src="js/modules/config/core/importarConfiguracoes.js"></script>
+    <script src="js/modules/config/core/exportarConfiguracoes.js"></script>
+    <script src="js/modules/config/core/resetarConfiguracoes.js"></script>
+    <script src="js/modules/config/core/atualizarPreview.js"></script>
+    <script src="js/modules/config/core/adicionarEventListeners.js"></script>
     <script src="js/modules/config.js"></script>
-    <script src="js/modules/pdfGenerator.js"></script>
-    <script src="js/modules/calculadoraInterface.js"></script>
+
+    <!-- Módulo de geração de PDF (estrutura modular) -->
+    <script src="js/modules/pdf/setup.js"></script>
+    <script src="js/modules/pdf/core/getBasePath.js"></script>
+    <script src="js/modules/pdf/core/carregarImagem.js"></script>
+    <script src="js/modules/pdf/core/carregarImagemArquivo.js"></script>
+    <script src="js/modules/pdf/core/carregarLogoEmpresa.js"></script>
+    <script src="js/modules/pdf/core/adicionarLinhaDivisoria.js"></script>
+    <script src="js/modules/pdf/core/adicionarLogoOuFallback.js"></script>
+    <script src="js/modules/pdf/core/coletarDadosFormulario.js"></script>
+    <script src="js/modules/pdf/core/validarDados.js"></script>
+    <script src="js/modules/pdf/core/calcularDataVencimento.js"></script>
+    <script src="js/modules/pdf/core/verificarQuebraPagina.js"></script>
+    <script src="js/modules/pdf/core/atualizarPosicaoY.js"></script>
+    <script src="js/modules/pdf/core/atualizarNumeracaoPaginas.js"></script>
+    <script src="js/modules/pdf/core/gerarOrcamento.js"></script>
+    <script src="js/modules/pdf/sections/adicionarCabecalho.js"></script>
+    <script src="js/modules/pdf/sections/adicionarCabecalhoSimples.js"></script>
+    <script src="js/modules/pdf/sections/adicionarDadosCliente.js"></script>
+    <script src="js/modules/pdf/sections/adicionarDetalhesProjeto.js"></script>
+    <script src="js/modules/pdf/sections/adicionarImagemProjeto.js"></script>
+    <script src="js/modules/pdf/sections/adicionarResumoFinanceiro.js"></script>
+    <script src="js/modules/pdf/sections/adicionarImpressao3D.js"></script>
+    <script src="js/modules/pdf/sections/adicionarServicosAdicionais.js"></script>
+    <script src="js/modules/pdf/sections/adicionarRodape.js"></script>
+    <script src="js/modules/pdf/pdfGenerator.js"></script>
+
+    <!-- Interface da calculadora (estrutura modular) -->
+    <script src="js/modules/calculadoraInterface/setup.js"></script>
+    <script src="js/modules/calculadoraInterface/core/initEventListeners.js"></script>
+    <script src="js/modules/calculadoraInterface/core/obterValoresInputs.js"></script>
+    <script src="js/modules/calculadoraInterface/core/validarInputs.js"></script>
+    <script src="js/modules/calculadoraInterface/core/calcularCusto.js"></script>
+    <script src="js/modules/calculadoraInterface/core/calcularCustoAutomatico.js"></script>
+    <script src="js/modules/calculadoraInterface/core/exibirResultado.js"></script>
+    <script src="js/modules/calculadoraInterface/core/ocultarResultado.js"></script>
+    <script src="js/modules/calculadoraInterface/core/atualizarElemento.js"></script>
+    <script src="js/modules/calculadoraInterface/core/scrollParaResultado.js"></script>
+    <script src="js/modules/calculadoraInterface/core/limparCalculadora.js"></script>
+    <script src="js/modules/calculadoraInterface/core/exportarResultado.js"></script>
+    <script src="js/modules/calculadoraInterface/core/copiarResultado.js"></script>
+    <script src="js/modules/calculadoraInterface/core/adicionarBotaoCopiar.js"></script>
+    <script src="js/modules/calculadoraInterface/calculadoraInterface.js"></script>
+
+    <!-- Interface avançada (estrutura modular) -->
+    <script src="js/modules/interfaceManager/setup.js"></script>
+    <script src="js/modules/interfaceManager/core/configurarEventListeners.js"></script>
+    <script src="js/modules/interfaceManager/core/configurarValidacaoTempoReal.js"></script>
+    <script src="js/modules/interfaceManager/core/validarCampo.js"></script>
+    <script src="js/modules/interfaceManager/core/configurarContadores.js"></script>
+    <script src="js/modules/interfaceManager/core/toggleDetalhes.js"></script>
+    <script src="js/modules/interfaceManager/core/ocultarLoadingSpinner.js"></script>
+    <script src="js/modules/interfaceManager/core/atualizarStatusAplicacao.js"></script>
+    <script src="js/modules/interfaceManager/core/previewPDF.js"></script>
+    <script src="js/modules/interfaceManager/core/mostrarAjuda.js"></script>
     <script src="js/modules/interfaceManager.js"></script>
+
+    <!-- Gerenciador principal (estrutura modular) -->
+    <script src="js/modules/app/setup.js"></script>
+    <script src="js/modules/app/core/verificarDependencias.js"></script>
+    <script src="js/modules/app/core/configurarEventListeners.js"></script>
+    <script src="js/modules/app/core/configurarFormatacaoTelefone.js"></script>
+    <script src="js/modules/app/core/adicionarFuncionalidadesExtras.js"></script>
+    <script src="js/modules/app/core/handleKeyboardShortcuts.js"></script>
+    <script src="js/modules/app/core/onPageVisible.js"></script>
+    <script src="js/modules/app/core/obterEstatisticas.js"></script>
+    <script src="js/modules/app/core/reiniciar.js"></script>
+    <script src="js/modules/app/core/debug.js"></script>
+    <script src="js/modules/app/core/inicializar.js"></script>
     <script src="js/app.js"></script>
 
     <!-- Script para preview de imagem -->
