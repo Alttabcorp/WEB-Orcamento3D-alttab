@@ -21,34 +21,41 @@ O **Sistema de Orçamentos 3D** é uma aplicação web desenvolvida pela ALTTAB 
 
 ### 🌟 Características Principais
 
-- **Calculadora Avançada**: Cálculo automático baseado em tempo e peso
-- **Múltiplos Custos**: Filamento, energia, acessórios, custos fixos, amortização
-- **Preços Sugeridos**: Valores para consumidor final e lojista
-- **Geração de PDF**: Relatórios profissionais em PDF
-- **Interface Moderna**: Design responsivo com identidade ALTTAB
-- **Dados do Cliente**: Gerenciamento de informações de contato
-- **Validação Inteligente**: Verificação automática de dados
-- **Performance Otimizada**: Carregamento rápido e eficiente
+- **Calculadora avançada**: custos automáticos a partir do tempo e peso informados
+- **Composição detalhada**: agrupamento em Material & Produção, Serviços Técnicos (com markup) e Acabamento/Embalagem
+- **Precificação inteligente**: preço consumidor psicológico, margem B2B ajustável e faixas escalonadas (10, 50 e 100+ unidades)
+- **Exportação versátil**: cópia rápida do resumo, exibição do PDF em nova aba e download opcional via navegador
+- **Interface modular**: experiência responsiva com estados salvos no navegador e validações em tempo real opcionais
+- **Personalização total**: painel de configurações para markup, custos fixos, energia, acessório, impostos, taxas e anúncio
+- **Relatórios profissionais**: PDF com branding ALTTAB, imagens opcionais e detalhamento completo do orçamento
 
 ## 🗂️ Estrutura do Projeto
 
 ```
 WEB-Orcamento3D-alttab/
-├── assets/                 # Recursos estáticos
+├── assets/
 │   ├── css/
-│   │   └── style.css      # Estilos principais
-│   ├── icons/             # Ícones e favicons
-│   └── images/            # Imagens e logos
-├── js/                    # Scripts JavaScript
-│   ├── modules/           # Módulos principais
-│   │   ├── calculator.js  # Lógica de cálculo
-│   │   ├── config.js      # Configurações
-│   │   └── *.js          # Outros módulos
-│   └── utils/            # Utilitários
-├── Documents/            # Documentação do projeto
-├── index.html           # Interface principal
-├── LICENSE             # Licença do projeto
-└── README.md          # Este arquivo
+│   │   ├── components/      # Estilos específicos de componentes
+│   │   └── style.css        # Tema principal
+│   ├── icons/               # Favicons e ícones PWA
+│   └── images/              # Logos e imagens utilitárias
+├── js/
+│   ├── app.js               # Bootstrap global (legado)
+│   ├── modules/
+│   │   ├── app/             # Inicialização geral da aplicação
+│   │   ├── calculator/      # Núcleo de cálculo e configuração padrão
+│   │   ├── calculadoraInterface/ # Camada de UI da calculadora
+│   │   ├── config/          # Painel de ajustes e persistência
+│   │   ├── interfaceManager/# UX geral, atalhos e validações
+│   │   ├── pdf/             # Geração, seções e helpers de PDF
+│   │   └── utils/           # Funções utilitárias compartilhadas
+│   └── utils/               # Adaptadores públicos (ex.: formatting.js)
+├── TECHNICAL_DOCS.md        # Documentação técnica complementar
+├── manifest.json            # Metadados PWA
+├── sw.js                    # Service worker opcional
+├── index.html               # Interface principal
+├── LICENSE
+└── README.md
 ```
 
 ## 🚀 Como Usar
@@ -104,26 +111,39 @@ WEB-Orcamento3D-alttab/
 
 4. **Geração do Orçamento**:
    - Clique em "Gerar Orçamento PDF"
-   - O sistema criará um relatório completo
+   - O relatório é aberto em uma nova aba (permita pop-ups do domínio)
+   - Salve ou envie o PDF diretamente pelo visualizador do navegador
+
+5. **Compartilhamento rápido**:
+   - Use o botão "📋 Copiar Resultado" para gerar um resumo textual
+   - Cole em conversas, e-mail ou CRM conforme necessário
 
 ## ⚙️ Configuração
 
 ### Personalização de Custos
 
-Os custos podem ser ajustados no arquivo `js/modules/config.js`:
+- Clique no botão **⚙️ Configurações** na interface para abrir o painel completo.
+- Ajuste preços de filamento, energia, acessórios, custos fixos, margem (markup), impostos, taxa de cartão, custo de anúncio e margem mínima do lojista.
+- As alterações são salvas automaticamente no navegador (localStorage) e podem ser exportadas/importadas via JSON.
+
+Se preferir definir novos valores padrão versionados, edite o arquivo `js/modules/calculator/core/getDefaultConfig.js`:
 
 ```javascript
-const CONFIG = {
-    custos: {
-        filamento: 0.08,        // R$ por grama
-        energia: 0.65,          // R$ por kWh
-        acessorios: 2.50,       // R$ fixo
-        // ... outros custos
-    },
-    precos: {
-        margemConsumidor: 3.0,  // Multiplicador
-        margemLojista: 2.0      // Multiplicador
-    }
+return {
+   preco_filamento_por_kg: 156.00,
+   potencia_w: 175,
+   valor_kw_h: 0.84,
+   quantidade_acessorios: 1,
+   custo_unidade_acessorio: 0.48,
+   custo_fixo_mensal: 300.00,
+   valor_maquina: 2000.00,
+   vida_util_horas: 24000,
+   percentual_falha: 0.10,
+   markup: 3,
+   percentual_imposto: 0.085,
+   taxa_cartao: 0.045,
+   custo_anuncio_percentual: 0.15,
+   margem_minima_lojista: 1.35
 };
 ```
 
@@ -141,7 +161,8 @@ const CONFIG = {
 - **Custo Energético**: Calculado por tempo de impressão
 - **Custos Fixos**: Amortização de equipamentos e instalações
 - **Impostos e Taxas**: Percentuais sobre o valor total
-- **Margens de Lucro**: Diferenciadas por tipo de cliente
+- **Margens de Lucro**: Markup com ajuste psicológico (.90) e margem mínima B2B configurável
+- **Escalonamento de Preços**: Faixas automáticas para 10, 50 e 100+ unidades com descontos progressivos
 
 ### Geração de PDF
 
@@ -149,6 +170,7 @@ const CONFIG = {
 - Layout profissional com branding ALTTAB
 - Inclui todos os detalhes do orçamento
 - Suporte a imagens do projeto
+- Pré-visualização em nova aba (sem download automático)
 
 ### Responsividade
 
