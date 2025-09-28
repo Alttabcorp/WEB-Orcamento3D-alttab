@@ -36,6 +36,10 @@
         const custoAnuncio = getValor('custo-anuncio-display');
         const precoConsumidor = getValor('preco-consumidor-display');
         const precoLojista = getValor('preco-lojista-display');
+        const precoFaixaBase = getValor('preco-faixa-base-display');
+        const precoFaixa10 = getValor('preco-faixa-10-display');
+        const precoFaixa50 = getValor('preco-faixa-50-display');
+        const precoFaixa100 = getValor('preco-faixa-100-display');
         const lucroBruto = getValor('lucro-consumidor-display');
         const lucroLiquido = formatarMoeda(
             parseMoeda(lucroBruto)
@@ -43,9 +47,9 @@
                 - parseMoeda(custoTaxaCartao)
                 - parseMoeda(custoAnuncio)
         );
-        const valorMarkup = window.CalculadoraUI.configuracoes?.markup
-            ? formatarMoeda(window.CalculadoraUI.configuracoes.markup)
-            : 'N/D';
+        const valorMarkup = formatarMoeda(
+            parseMoeda(precoConsumidor) - parseMoeda(custoTotal)
+        );
 
         return `
 ORÇAMENTO IMPRESSÃO 3D - ${UtilsModule.formatarData()}
@@ -75,6 +79,12 @@ PREÇOS SUGERIDOS:
 - Preço Lojista: ${precoLojista}
 - Lucro Bruto (Consumidor): ${lucroBruto}
 - Lucro Líquido (Consumidor): ${lucroLiquido}
+
+ESCALONAMENTO:
+- 1 - 9 unidades: ${precoFaixaBase}
+- 10 - 49 unidades: ${precoFaixa10}
+- 50 - 99 unidades: ${precoFaixa50}
+- 100+ unidades: ${precoFaixa100}
 
 ---
 Gerado por Alttab - Soluções em 3D

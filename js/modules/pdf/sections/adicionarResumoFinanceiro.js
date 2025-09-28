@@ -33,7 +33,7 @@
         doc.setFontSize(16);
         doc.setTextColor(73, 80, 87);
 
-          if (custo.preco_consumidor_final) {
+        if (custo.preco_consumidor_final) {
             doc.setFillColor(231, 243, 255);
             doc.rect(margemEsquerda - 2, pdf.yAtual - 12, larguraUtil + 4, 22, 'F');
             doc.setFontSize(18);
@@ -44,8 +44,6 @@
         }
         pdf.yAtual += 18;
 
-      
-
         if (custo.preco_lojista) {
             doc.setFillColor(239, 235, 252);
             doc.rect(margemEsquerda - 2, pdf.yAtual - 12, larguraUtil + 4, 22, 'F');
@@ -54,6 +52,26 @@
             doc.text('Preço Lojista (mín. 50 unidades):', margemEsquerda, pdf.yAtual);
             doc.text(custo.preco_lojista, margemDireita, pdf.yAtual, { align: 'right' });
             pdf.yAtual += 20;
+        }
+
+        if (custo.precos_escalonados) {
+            pdf.yAtual += 6;
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(13);
+            doc.text('Kits:', margemEsquerda, pdf.yAtual);
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(12);
+            pdf.yAtual += 8;
+
+            const itensEscalonamento = [
+                `1 - 9 unidades: ${custo.precos_escalonados.faixa_padrao}`,
+                `10 - 49 unidades: ${custo.precos_escalonados.faixa_10}`,
+                `50 - 99 unidades: ${custo.precos_escalonados.faixa_50_intervalo}`,
+                `100+ unidades: ${custo.precos_escalonados.faixa_100}`
+            ];
+
+            doc.text(itensEscalonamento, margemEsquerda + 6, pdf.yAtual);
+            pdf.yAtual += (itensEscalonamento.length * 7) + 10;
         }
 
         doc.setFont('helvetica', 'normal');

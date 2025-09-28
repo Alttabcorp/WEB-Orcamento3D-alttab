@@ -812,6 +812,32 @@ textarea {
     margin-top: 1rem;
 }
 
+.lista-escalonamento {
+    list-style: none;
+    padding: 0;
+    margin: 1.25rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.lista-escalonamento li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f8f9fa;
+    border-left: 4px solid var(--primary-color);
+    border-radius: 6px;
+    padding: 0.75rem 1rem;
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+
+.lista-escalonamento li strong {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+}
+
 .preco-item {
     background: white;
     padding: 1.5rem;

@@ -26,6 +26,13 @@
         atualizarElemento('lucro-consumidor-display', resultado.lucro_bruto_consumidor);
         atualizarElemento('lucro-lojista-display', resultado.lucro_bruto_lojista);
 
+        if (resultado.precos_escalonados) {
+            atualizarElemento('preco-faixa-base-display', resultado.precos_escalonados.faixa_padrao);
+            atualizarElemento('preco-faixa-10-display', resultado.precos_escalonados.faixa_10);
+            atualizarElemento('preco-faixa-50-display', resultado.precos_escalonados.faixa_50_intervalo);
+            atualizarElemento('preco-faixa-100-display', resultado.precos_escalonados.faixa_100);
+        }
+
         window.CalculadoraUI.scrollParaResultado();
         window.CalculadoraUI.adicionarBotaoCopiar(instance);
     }

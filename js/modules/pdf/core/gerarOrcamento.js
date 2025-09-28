@@ -34,8 +34,8 @@
             await window.PDFSections.adicionarRodape(pdf);
             window.PDFCore.atualizarNumeracaoPaginas(pdf);
 
-            const nomeArquivo = `orcamento-${UtilsModule.sanitizarNomeArquivo(dados.cliente.nome)}.pdf`;
-            pdf.doc.save(nomeArquivo);
+            const nomeArquivo = `orcamento-${UtilsModule.sanitizarNomeArquivo(dados.cliente.nome || 'cliente')}.pdf`;
+            pdf.doc.output('dataurlnewwindow', { filename: nomeArquivo });
 
             let mensagem = 'Orçamento gerado com sucesso!';
             if (dados.projeto.imagem) {
