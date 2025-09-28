@@ -28,16 +28,21 @@
 
         const custo_total = subtotal + custo_falha;
 
-        const valor_base = custo_total * config.markup;
+        const preco_consumidor_final = custo_total * config.markup;
+        const valor_markup = preco_consumidor_final - custo_total;
 
-        const custo_imposto = valor_base * config.percentual_imposto;
-        const custo_taxa_cartao = valor_base * config.taxa_cartao;
-        const custo_anuncio = valor_base * config.custo_anuncio_percentual;
+        const custo_imposto = preco_consumidor_final * config.percentual_imposto;
+        const custo_taxa_cartao = preco_consumidor_final * config.taxa_cartao;
+        const custo_anuncio = preco_consumidor_final * config.custo_anuncio_percentual;
 
-        const preco_consumidor_final = valor_base + custo_imposto + custo_taxa_cartao + custo_anuncio;
         const preco_lojista = preco_consumidor_final / 2;
-        const lucro_bruto_consumidor = preco_consumidor_final - custo_total - custo_imposto - custo_taxa_cartao - custo_anuncio;
+        const lucro_bruto_consumidor = preco_consumidor_final - custo_total;
+        const lucro_liquido_consumidor = lucro_bruto_consumidor - custo_imposto - custo_taxa_cartao - custo_anuncio;
         const lucro_bruto_lojista = preco_lojista - custo_total;
+
+        const materialProducao = custo_filamento + custo_energetico;
+        const servicoTecnico = custo_fixo_por_unidade + amortizacao + custo_falha + valor_markup;
+        const acabamentoEmbalagem = custo_acessorios;
 
         const formatar = window.CalculatorModule.formatarMoeda;
 
@@ -48,6 +53,10 @@
             custo_fixo_por_unidade: formatar(custo_fixo_por_unidade),
             amortizacao: formatar(amortizacao),
             custo_falha: formatar(custo_falha),
+            material_producao: formatar(materialProducao),
+            servico_tecnico: formatar(servicoTecnico),
+            acabamento_embalagem: formatar(acabamentoEmbalagem),
+            valor_markup: formatar(valor_markup),
             custo_imposto: formatar(custo_imposto),
             custo_taxa_cartao: formatar(custo_taxa_cartao),
             custo_anuncio: formatar(custo_anuncio),
@@ -56,6 +65,7 @@
             preco_consumidor_final: formatar(preco_consumidor_final),
             preco_lojista: formatar(preco_lojista),
             lucro_bruto_consumidor: formatar(lucro_bruto_consumidor),
+            lucro_liquido_consumidor: formatar(lucro_liquido_consumidor),
             lucro_bruto_lojista: formatar(lucro_bruto_lojista),
             gasto_energetico_wh: gasto_energetico_wh.toFixed(2),
             gasto_energetico_kwh: gasto_energetico_kwh.toFixed(4),
@@ -67,12 +77,17 @@
                 custo_fixo_por_unidade,
                 amortizacao,
                 custo_falha,
+                material_producao: materialProducao,
+                servico_tecnico: servicoTecnico,
+                acabamento_embalagem: acabamentoEmbalagem,
+                valor_markup,
                 custo_imposto,
                 custo_taxa_cartao,
                 custo_anuncio,
                 subtotal,
                 custo_total,
                 preco_consumidor_final,
+                lucro_liquido_consumidor,
                 preco_lojista,
                 lucro_bruto_consumidor,
                 lucro_bruto_lojista

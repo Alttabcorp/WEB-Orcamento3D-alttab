@@ -18,9 +18,9 @@
         doc.setFontSize(12);
 
         const resumoItens = [
-            `Material e Produção: ${custo.custo_filamento}`,
-            `Serviços Técnicos: ${custo.custo_fixo_por_unidade}`,
-            `Acabamento/Embalagem: ${custo.custo_acessorios}`
+            `Material e Produção: ${custo.material_producao}`,
+            `Serviços Técnicos: ${custo.servico_tecnico}`,
+            `Acabamento/Embalagem: ${custo.acabamento_embalagem}`
         ];
 
         doc.text(resumoItens, margemEsquerda, pdf.yAtual);
@@ -32,19 +32,19 @@
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(16);
         doc.setTextColor(73, 80, 87);
-        doc.text(`Custo de Produção: ${custo.custo_total}`, margemEsquerda, pdf.yAtual);
 
-        pdf.yAtual += 18;
-
-        if (custo.preco_consumidor_final) {
+          if (custo.preco_consumidor_final) {
             doc.setFillColor(231, 243, 255);
             doc.rect(margemEsquerda - 2, pdf.yAtual - 12, larguraUtil + 4, 22, 'F');
             doc.setFontSize(18);
             doc.setTextColor(0, 123, 255);
-            doc.text('Preço Cliente Final:', margemEsquerda, pdf.yAtual);
+            doc.text('Preço Final:', margemEsquerda, pdf.yAtual);
             doc.text(custo.preco_consumidor_final, margemDireita, pdf.yAtual, { align: 'right' });
             pdf.yAtual += 22;
         }
+        pdf.yAtual += 18;
+
+      
 
         if (custo.preco_lojista) {
             doc.setFillColor(239, 235, 252);

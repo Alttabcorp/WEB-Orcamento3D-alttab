@@ -7,6 +7,7 @@
 
         const btnCopiar = document.createElement('button');
         btnCopiar.id = 'btn-copiar-resultado';
+        btnCopiar.type = 'button';
         btnCopiar.className = 'btn btn-secondary';
         btnCopiar.style.marginTop = '1rem';
         btnCopiar.innerHTML = '📋 Copiar Resultado';
