@@ -56,11 +56,9 @@
             return window.PDFSections.adicionarImpressao3D(this, impressao3D);
         }
 
-        /*
-        Resumo financeiro
         async adicionarResumoFinanceiro(custo) {
             return window.PDFSections.adicionarResumoFinanceiro(this, custo);
-        }*/
+        }
 
         async adicionarServicosAdicionais(servicosAdicionais) {
             return window.PDFSections.adicionarServicosAdicionais(this, servicosAdicionais);

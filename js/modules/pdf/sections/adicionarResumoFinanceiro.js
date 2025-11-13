@@ -6,6 +6,8 @@
 
         pdf.yAtual = await window.PDFCore.verificarQuebraPagina(pdf, 90);
 
+        /* Resumo financeiro removido
+
         const { doc, margemEsquerda, margemDireita, larguraUtil } = pdf;
         doc.setFontSize(16);
         doc.text('Resumo Financeiro', margemEsquerda, pdf.yAtual);
@@ -25,10 +27,10 @@
 
         doc.text(resumoItens, margemEsquerda, pdf.yAtual);
         pdf.yAtual += (resumoItens.length * 7) + 10;
-
+        
         window.PDFCore.adicionarLinhaDivisoria(pdf, pdf.yAtual);
         pdf.yAtual += 10;
-
+        */
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(16);
         doc.setTextColor(73, 80, 87);
