@@ -6,7 +6,7 @@
 
         pdf.yAtual = await window.PDFCore.verificarQuebraPagina(pdf, 90);
 
-        /* Resumo financeiro removido
+        
 
         const { doc, margemEsquerda, margemDireita, larguraUtil } = pdf;
         doc.setFontSize(16);
@@ -18,6 +18,7 @@
 
         pdf.yAtual += 10;
         doc.setFontSize(12);
+        /* Resumo financeiro removido
 
         const resumoItens = [
             `Material e Produção: ${custo.material_producao}`,
@@ -28,9 +29,10 @@
         doc.text(resumoItens, margemEsquerda, pdf.yAtual);
         pdf.yAtual += (resumoItens.length * 7) + 10;
         
+        */
         window.PDFCore.adicionarLinhaDivisoria(pdf, pdf.yAtual);
         pdf.yAtual += 10;
-        */
+        
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(16);
         doc.setTextColor(73, 80, 87);
